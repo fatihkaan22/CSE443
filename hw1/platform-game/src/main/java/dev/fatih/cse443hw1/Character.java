@@ -44,7 +44,7 @@ public class Character {
   private double getNextPosByElapsedTime(double deltaT) {
     // delta_x = v_0 * t - 1/2 * g * t^2
     double deltaX = defaultVerticalVelocity * deltaT - 0.5 * Util.GRAVITATIONAL_ACCELERATION * Math.pow(deltaT, 2);
-    System.out.println(deltaX);
+//    System.out.println(deltaX);
     double position = ground - deltaX * jumpPower;
     return Math.min(position, ground);
   }

@@ -1,0 +1,95 @@
+#+TITLE: CSE443 - Object-Oriented Analysis & Design - HW 3
+
+#+OPTIONS: num:nil
+#+SETUPFILE: /home/near/opt/template-nodate.org
+#+LATEX_HEADER: \usepackage[margin=0.5in]{geometry}
+#+LaTeX_CLASS_OPTIONS: [a4paper]
+#+LATEX_HEADER: \usepackage{minted}
+#+LATEX_HEADER: \usepackage{multicol}
+#+LATEX_HEADER: \definecolor{bg}{rgb}{0.95,0.95,0.95}
+#+LATEX_HEADER: \newminted{java}{fontsize=\footnotesize,frame=single,framesep=2mm}
+#+LATEX_HEADER: \newminted{text}{fontsize=\footnotesize,frame=single,framesep=2mm}
+
+# #+ATTR_LATEX: :font \ttfamily{}
+
+* Part 1
+
+The proxy pattern is used to provide safe access to data structure from multiple threads.
+The synchronization problem is handled as in the readers-writers problem.
+Synchronization is ensured using Java's =ReentrantReadWriteLock= by wrapping the methods of data structure with lock and unlock methods of the appropriate lock type.
+
+
+
+#+attr_org: :width 400px
+#+caption: Class Diagram
+[[file:org-img/Part_1/2021-12-12_19-49-36_screenshot.png]]
+
+
+To test, two threads are created in =Main= method, which calls =insert()=, =get()= and =remove()= respectively.
+The output stream is modified to the print timestamp to demonstrate synchronization.
+All operations are simulated using =Thread.sleep(1000)=.
+So, the thread-unsafe version is expected to take about 3 seconds, and the thread-safe version is expected to take about 5 seconds (not 6 because both threads can read the data if no writers have the lock).
+
+
+Output:
+
+#+begin_export latex
+\begin{minted}[fontsize=\small,frame=single,framesep=3mm]{text}
+[19:43:35.154400] ==== TEST: THREAD UNSAFE ====
+[19:43:35.190006] Thread 1 started
+[19:43:35.190242] Thread 2 started
+[19:43:35.190334] inserting
+[19:43:35.190360] inserting
+[19:43:36.190616] getting
+[19:43:36.190627] getting
+[19:43:37.191169] removing
+[19:43:37.191284] removing
+[19:43:38.191698] Thread 1 finished
+[19:43:38.191903] Thread 2 finished
+[19:43:38.192742] ==== TEST: THREAD SAFE ====
+[19:43:38.193765] Thread 1 started
+[19:43:38.194064] Thread 2 started
+[19:43:38.195885] inserting
+[19:43:39.196609] inserting
+[19:43:40.197320] getting
+[19:43:40.197895] getting
+[19:43:41.198459] removing
+[19:43:42.199258] Thread 2 finished
+[19:43:42.199355] removing
+[19:43:43.200355] Thread 1 finished
+\end{minted}
+#+end_export
+
+
+\newpage
+* Part 2
+
+Corresponding classes of composite design pattern;
+- Component: =EmailComponent=
+- Composite: =EmailGroup=
+- Leaf: =Email=
+
+=EmailComponent= is an abstract class instead of an interface because the email address field is common in both =Email= and =EmailGroup=.
+
+
+#+attr_org: :width 400px
+#+caption: Class Diagram
+[[file:org-img/Part_2/2021-12-11_22-21-10_screenshot.png]]
+
+
+Output:
+
+#+begin_export latex
+\begin{minted}[fontsize=\small,frame=single,framesep=3mm,breaklines]{text}
+==== TEST: print method called on an email =====
+kendallroy@waystar.com Kendall Roy
+==== TEST: print method called on an email group where elements are an email and an email group =====
+loganroy@waystar.com Logan Roy
+roysiblings@waystarroyco.com:{siobhanroy@waystar.com Siobhan Roy, kendallroy@waystar.com Kendall Roy, romanroy@waystar.com Roman Roy}
+==== TEST: print method called on an email group where elements are emails and nested email groups =====
+gerrikelman@waystar.com Gerri Kelman
+tomwambsgans@waystar.com Tom
+royfamily@waystarroyco.com:{loganroy@waystar.com Logan Roy, roysiblings@waystarroyco.com:{siobhanroy@waystar.com Siobhan Roy, kendallroy@waystar.com Kendall Roy, romanroy@waystar.com Roman Roy}}
+\end{minted}
+#+end_export
+

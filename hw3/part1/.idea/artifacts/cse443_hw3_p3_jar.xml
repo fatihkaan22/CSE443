@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="cse443-hw3-p3:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/cse443_hw3_p3_jar</output-path>
+    <root id="archive" name="cse443-hw3-p3.jar">
+      <element id="module-output" name="cse443-hw3-p3" />
+    </root>
+  </artifact>
+</component>

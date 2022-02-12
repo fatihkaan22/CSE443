@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact name="cse344-hw1-swing:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/cse344_hw1_swing_jar</output-path>
+    <root id="root">
+      <element id="archive" name="cse344-hw1-swing.jar">
+        <element id="module-output" name="cse344-hw1-swing" />
+      </element>
+    </root>
+  </artifact>
+</component>

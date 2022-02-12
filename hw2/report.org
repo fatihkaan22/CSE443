@@ -1,0 +1,132 @@
+#+TITLE: CSE443 - Object-Orianted Analysis & Desing - HW 2
+
+#+OPTIONS: num:nil
+#+SETUPFILE: /home/near/opt/template-nodate.org
+#+LATEX_HEADER: \usepackage[margin=1in]{geometry}
+#+LaTeX_CLASS_OPTIONS: [a4paper]
+#+LATEX_HEADER: \usepackage{minted}
+#+LATEX_HEADER: \usepackage{multicol}
+#+LATEX_HEADER: \definecolor{bg}{rgb}{0.95,0.95,0.95}
+#+LATEX_HEADER: \newminted{java}{fontsize=\footnotesize,frame=single,framesep=2mm}
+#+LATEX_HEADER: \newminted{text}{breaklines,fontsize=\footnotesize,frame=single,framesep=2mm}
+
+
+# #+ATTR_LATEX: :font \ttfamily{}
+
+* Design Explanation
+
+** Java FX Tile Game
+
+=Main= class creates the factories, loads the FXML template and shows the stage.
+=MainController= implements =Initializable= to initialize the Grid Pane and the Hero Pane.
+For displaying tiles, =GridPanel= is used.
+Every tile on the grid has a =Label=.
+Event handlers are added to these labels in order to listen the user input.
+
+Hero pane consist of labels and a progress bar placed in a vertical box.
+Statusbar consist of a JavaFX's =ListView=.
+
+=common/Util.java= stores the constants used different classes like the width & height of the window, animation durations etc.
+
+** Styling
+
+Most of the styling of the FX elements made using CSS stylesheet (=app.css=).
+When the style needed to change, such as selecting a tile or highlighting a tile, classnames are added to the =Node= or removed from the =Node=.
+
+** Notes
+
+- User input is disabled when the animation are running.
+- The turn stays in the user, until he/she makes a successful move. (3 tiles lined up).
+- Computer is waiting for 2 seconds before it makes a move.
+
+
+
+  \newpage
+** Synchronization & Animations
+
+When user selects 2 tiles, and the tiles are swapped, =cascadedMove= function calls move function recursively until the grid is cleared from lined up tiles.
+=move= takes another =Thread= as an arguement to wait, to enable cascading =move= calls.
+=waitAndRun= function first waits for the given thread to terminate by calling =Thread.join()=, runs the runnable and, sleeps for given miliseconds.
+
+Every step of a move runs in a seperate thread to make the steps wait for each other before running.
+
+Steps:
+- wait for swap
+- highlight matches
+- remove matches
+- fill gaps
+- spawn new tiles
+
+According to JavaFX the user interface cannot be directly updated from a non-application thread.
+Therefore UI updates made by the seperate thread wrapped up with =Platform.runLater(() -> {})=.
+
+=move= function in the =Grid.java=;
+
+\begin{javacode}
+public Thread move(Thread waitFor, boolean isSwap) {
+  boolean noMatch = !matchingTiles(t -> true);
+  Thread swapWait = waitAndRun(null, () -> {
+  }, Util.SWAP_DURATION);
+  Thread highlight = waitAndRun(isSwap ? swapWait : null, () -> {
+    highlighted = matchingTiles(TileView::highlight);
+  }, noMatch ? 0 : Util.HIGHLIGHT_DURATION);
+
+  Thread scaleDown = waitAndRun(highlight, () -> {
+    // remove status
+    Platform.runLater(() -> statusBar.getItems().clear());
+    if (highlighted) {
+      performDamage(characters, enemies);
+      removeHighlight();
+      removeMatchingTiles();
+      // update ui
+      Platform.runLater(() -> enemies.asList().forEach(HeroView::updateView));
+    }
+  }, noMatch ? 0 : Util.SCALE_DURATION);
+
+  Thread fillGaps = waitAndRun(scaleDown, () -> {
+    fillGaps();
+  }, noMatch ? 0 : Util.FILL_GAPS_DURATION);
+
+  Thread spawnNewTiles = waitAndRun(fillGaps, () -> {
+    spawnNewTiles();
+    if (highlighted) {
+      changeTurn();
+    } else {
+      userInputEnabled = true;
+    }
+  }, noMatch ? 0 : Util.FILL_GAPS_DURATION);
+
+  waitAndRun(waitFor, () -> {
+    swapWait.start();
+    highlight.start();
+    scaleDown.start();
+    fillGaps.start();
+    spawnNewTiles.start();
+  }, 0).start();
+  return spawnNewTiles;
+}
+\end{javacode}
+
+
+
+\newpage
+** Abstract Factory Pattern
+
+=HeroFactory= is the abstract factory interface, and there are 3 concreate factories which are =ValhallaFactory=, =AtlantisFactory=, and =UnderwildFactory= implements the =HeroFactory=.
+Factories have 3 methods in order to create heros according to type.
+Factory methods call the constructor of the =Hero= with given factor values to calculate styled properties.
+
+General damage is calculated in =Hero.java=, and styled (multiplied by 2 or 0.5) in extended hero classes.
+
+
+
+#+attr_org: :width 400px
+[[file:org-img/Design_Explanation/2021-11-09_15-45-09_screenshot.png]]
+
+
+\newpage
+** General Class Diagram
+
+
+#+attr_org: :width 400px
+[[file:org-img/Design_Explanation/2021-11-10_01-49-35_screenshot.png]]

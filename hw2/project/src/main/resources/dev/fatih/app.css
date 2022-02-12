@@ -1,0 +1,68 @@
+* {
+    -bg1: #f2f2f2;
+    -bg2: #fafafa;
+    -bg3: #a0a4b0;
+    -yellow: rgb(217, 214, 0);
+    -purple: #a626a4;
+    -fx-border-width: 3;
+}
+
+.root {
+    -fx-background-color: -bg3;
+    -fx-alignment: CENTER;
+    -fx-padding: 18;
+}
+
+#gridPane {
+    -fx-alignment: CENTER;
+    -fx-border-color: -purple;
+    /*-fx-hgap: 10;*/
+    /*-fx-vgap: 10;*/
+    -fx-background-color: -bg1;
+}
+
+.tile {
+    -fx-alignment: CENTER;
+    -fx-background-color: -bg1;
+    -fx-pref-width: 64;
+    -fx-pref-height: 64;
+    -fx-font-size: 30;
+}
+
+.tile-selected {
+    -fx-border-width: 2;
+    -fx-border-color: black;
+}
+
+.tile:hover {
+    -fx-background-color: -bg3;
+}
+
+.tile-lined {
+    -fx-background-color: -yellow;
+}
+
+#characterHBox, #enemyHBox {
+    -fx-padding: 20;
+    -fx-background-color: -bg1;
+    -fx-border-color: -purple;
+}
+
+.hero-container {
+    -fx-pref-width: 400;
+    -fx-alignment: CENTER;
+    -fx-spacing: 10;
+}
+
+.hero-name {
+    -fx-font-size: 17;
+}
+
+.progress-bar {
+    -fx-pref-width: 200;
+}
+
+.list-view {
+    -fx-border-color: -purple;
+    -fx-background-color: -bg1;
+}

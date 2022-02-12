@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import java.net.URL?>
+<?import javafx.stage.Screen?>
+<?import javafx.scene.control.ListView?>
+<VBox fx:id="root" prefHeight="${screen.visualBounds.height}" alignment="CENTER" spacing="20.0"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="dev.fatih.MainController">
+    <fx:define>
+        <Screen fx:factory="getPrimary" fx:id="screen"/>
+    </fx:define>
+    <HBox fx:id="characterHBox" prefHeight="${root.height*0.2}" alignment="CENTER" spacing="40.0"/>
+    <HBox fx:id="enemyHBox" prefHeight="${root.height*0.2}" alignment="CENTER" spacing="40.0"/>
+    <GridPane fx:id="gridPane" prefHeight="${root.height*0.4}"/>
+    <!--    <Button text="Hello!" onAction="#onHelloButtonClick"/>-->
+    <ListView fx:id="statusBar" prefHeight="${root.height*0.2}" />
+
+    <stylesheets>
+        <URL value="@app.css"/>
+    </stylesheets>
+</VBox>

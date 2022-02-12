@@ -1,0 +1,22 @@
+<component name="ArtifactManager">
+  <artifact name="cse443-hw2:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/cse443_hw2_jar</output-path>
+    <root id="root">
+      <element id="archive" name="cse443-hw2.jar">
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/demo/src/main/java/META-INF/MANIFEST.MF" />
+        </element>
+        <element id="module-output" name="cse443-hw2" />
+        <element id="module-output" name="demo" />
+      </element>
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:11.0.2" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:linux:11.0.2" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:11.0.2" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:linux:11.0.2" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:11.0.2" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:linux:11.0.2" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:linux:11.0.2" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:11.0.2" />
+    </root>
+  </artifact>
+</component>

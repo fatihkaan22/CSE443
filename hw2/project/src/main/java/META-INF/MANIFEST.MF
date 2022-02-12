@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Main-Class: dev.fatih.Main
+Class-Path: javafx-base-11.0.2.jar javafx-graphics-11.0.2-linux.jar java
+ fx-controls-11.0.2.jar javafx-fxml-11.0.2-linux.jar javafx-graphics-11.
+ 0.2.jar javafx-base-11.0.2-linux.jar javafx-controls-11.0.2-linux.jar j
+ avafx-fxml-11.0.2.jar
+
